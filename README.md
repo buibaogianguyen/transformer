@@ -58,30 +58,35 @@ transformer/
 # Setup
 
 Clone the repository:
+``` cmd
 git clone https://github.com/buibaogianguyen/transformer.git
 cd transformer
+```
 
 
 Install dependencies:
+``` cmd
 pip install -r requirements.txt
+```
 
 
 Prepare the dataset:
 
 Make sure a data.json file is present in the root directory containing input and output pairs of format:
-
+``` json
 [
     {"input": "Example question 1", "output": "Example answer 1"},
     {"input": "Example question 2", "output": "Example answer 2"},
     ...
 ]
+```
 
 
 # Usage
 ## Training
 To train the model, run:
 
-``` bash
+``` cmd
 python train.py --data_path data.json --model_path model.pth --vocab_path vocabulary.json --epochs 10 --batch_size 32
 ```
 
@@ -105,7 +110,7 @@ The model and vocabulary will be saved to model.pth and vocabulary.json.
 ## Inference
 To run inference with a trained model, use:
 
-``` bash
+``` cmd
 python inference.py --prompt "Hello" --model_path model.pth --vocab_path vocabulary.json --max_len 256
 ```
 
@@ -123,7 +128,7 @@ Where:
 
 
 ## Example
-``` bash
+``` cmd
 python inference.py --prompt "What is the average tuition fee for out of state students?"
 ```
 
