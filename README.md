@@ -3,8 +3,7 @@ This project implements a PyTorch based Transformer model that processes input q
 
 
 
-# Table of Contents
-- [Table of Contents](#table-of-contents)
+# Navigation
 - [Attention is all you need](#attention-is-all-you-need)
 - [Project Structure](#project-structure)
 - [Setup](#setup)
