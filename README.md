@@ -4,9 +4,14 @@ This project implements a PyTorch based Transformer model that processes input q
 
 
 # Navigation
-- [Attention is all you need](#attention-is-all-you-need)
+- [Research Paper - Attention is all you need](#research-paper---attention-is-all-you-need)
+- [Requirements](#requirements)
 - [Project Structure](#project-structure)
 - [Setup](#setup)
+- [Usage](#usage)
+  - [Training](#training)
+  - [Inference](#inference)
+  - [Example](#example)
 - [Model](#model)
   - [Layer Normalization](#layer-normalization)
   - [Multi-Head Attention Mechanism](#multi-head-attention-mechanism)
@@ -19,24 +24,35 @@ This project implements a PyTorch based Transformer model that processes input q
   - [Transformer](#transformer)
 
 
-# Attention Is All You Need
+# Research Paper - Attention Is All You Need
 This model is based entirely on the deep-learning architecture introduced in the 2017 research paper [Attention is All You Need](https://arxiv.org/abs/1706.03762), authored by Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, and Illia Polosukhin.
 
 <p align="center">
 <img src="https://i.postimg.cc/Bnh9Yj0d/Screenshot-2025-06-14-181649.png" width="500">
 </p>
 
+# Requirements
+
+``` bash
+Python 3.8+
+PyTorch 2.0.0+
+Transformers 4.30.0+
+NumPy 1.22.0+
+```
+
+- requirements.txt.
+
 # Project Structure
 
 ``` bash
 transformer/
 ├── src/
-│   └── transformer.py  # Core model implementation
+│   └── transformer.py  # Core model
 ├── data.json          # Dataset file (input-output pairs)
 ├── requirements.txt   # Dependencies
 ├── train.py          # Training script
 ├── inference.py      # Inference script
-└── LICENSE           # MIT License
+└── LICENSE
 ```
 
 # Setup
@@ -52,7 +68,7 @@ pip install -r requirements.txt
 
 Prepare the dataset:
 
-Ensure a data.json file is present in the root directory with the format:
+Make sure a data.json file is present in the root directory containing input and output pairs of format:
 
 [
     {"input": "Example question 1", "output": "Example answer 1"},
@@ -61,7 +77,82 @@ Ensure a data.json file is present in the root directory with the format:
 ]
 
 
+# Usage
+## Training
+To train the model, run:
+
+``` bash
+python train.py --data_path data.json --model_path model.pth --vocab_path vocabulary.json --epochs 10 --batch_size 32
+```
+
+(Adjust as needed)
+
+Where:
+
+--data_path: Path to the data.json dataset file.
+
+--model_path: Path to save model.
+
+--vocab_path: Path to save vocabulary.
+
+--epochs: Training epochs.
+
+--batch_size: Training batch size.
+
+
+
+The model and vocabulary will be saved to model.pth and vocabulary.json.
+## Inference
+To run inference with a trained model, use:
+
+``` bash
+python inference.py --prompt "Hello" --model_path model.pth --vocab_path vocabulary.json --max_len 256
+```
+
+(Adjust as needed)
+
+Where:
+
+--prompt: Input question for the model.
+
+--model_path: Path to the trained model weights.
+
+--vocab_path: Path to the vocabulary file.
+
+--max_len: Maximum sequence length for inference.
+
+
+## Example
+``` bash
+python inference.py --prompt "What is the average tuition fee for out of state students?"
+```
+
+Output:
+
+Prompt: What is the average tuition fee for out of state students?
+
+Response: [Generated answer]
+
+License
+This project is licensed under the MIT License. See the LICENSE file for details.
+Contributing
+Contributions are welcome! Please open an issue or submit a pull request with improvements or bug fixes.
+
 # Model
+
+## Model Architecture
+The model is a standard Transformer model with:
+
+``` bash
+- 4 encoder/decoder layers
+- 8 attention heads
+- 512 dimensional embeddings
+- 2048 dimensional feed-forward layers
+- 0.1 dropout
+- 256 tokens maximum sequence length
+```
+
+The model uses a custom vocabulary built from the dataset and the BERT tokenizer.
 
 ## Layer Normalization
 
@@ -346,55 +437,3 @@ class Transformer(nn.Module):
         return output, enc_attn_scores, dec_attn_scores1, dec_attn_scores2
 ```
 
-# Usage
-Training
-To train the model, run:
-python train.py --data_path data.json --model_path model.pth --vocab_path vocabulary.json --epochs 10 --batch_size 32
-
-
---data_path: Path to the dataset JSON file.
---model_path: Path to save/load model weights.
---vocab_path: Path to save/load vocabulary.
---epochs: Number of training epochs.
---batch_size: Batch size for training.
-
-The model and vocabulary will be saved to model.pth and vocabulary.json.
-Inference
-To run inference with a trained model, use:
-python inference.py --prompt "What is the tuition fee for grade 12?" --model_path model.pth --vocab_path vocabulary.json --max_len 256
-
-
---prompt: Input question for the model.
---model_path: Path to the trained model weights.
---vocab_path: Path to the vocabulary file.
---max_len: Maximum sequence length for inference.
-
-Example
-python inference.py --prompt "What is the tuition fee for grade 12?"
-
-Output:
-Prompt: What is the tuition fee for grade 12?
-Response: [Generated answer]
-
-Model Architecture
-The model is a standard Transformer with:
-
-4 encoder and decoder layers
-8 attention heads
-512-dimensional embeddings
-2048-dimensional feed-forward layers
-Dropout of 0.1
-Maximum sequence length of 256 tokens
-
-It uses a custom vocabulary built from the dataset and the BERT tokenizer for preprocessing.
-Requirements
-
-Python 3.8+
-PyTorch 2.0.0+
-Transformers 4.30.0+
-
-See requirements.txt for the full list.
-License
-This project is licensed under the MIT License. See the LICENSE file for details.
-Contributing
-Contributions are welcome! Please open an issue or submit a pull request with improvements or bug fixes.
