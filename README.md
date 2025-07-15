@@ -442,3 +442,10 @@ class Transformer(nn.Module):
         return output, enc_attn_scores, dec_attn_scores1, dec_attn_scores2
 ```
 
+# License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+# Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request with improvements or bug fixes.
